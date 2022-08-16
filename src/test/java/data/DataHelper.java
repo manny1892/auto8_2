@@ -64,6 +64,29 @@ public class DataHelper {
         return new VerificationCode(login, verificationCode);
     }
 
+    public static void clearDB() {
+
+        val deleteAuthCodes = "DELETE FROM auth_codes;";
+        val deleteCardTransactions = "DELETE FROM card_transactions;";
+        val deleteCards = "DELETE FROM cards;";
+        val deleteUsers = "DELETE FROM users;";
+        val runner = new QueryRunner();
+
+        try (
+                val conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                );
+        ) {
+            runner.update(conn, deleteAuthCodes);
+            runner.update(conn, deleteCardTransactions);
+            runner.update(conn, deleteCards);
+            runner.update(conn, deleteUsers);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Data
     public static class Cards {
         private final String id;

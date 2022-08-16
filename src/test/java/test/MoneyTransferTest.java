@@ -2,11 +2,18 @@ package test;
 
 import data.APIHelper;
 import data.DataHelper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-class Test {
+class MoneyTransferTest {
 
-    @org.junit.jupiter.api.Test
+    @AfterAll
+    static void clearDB() {
+        DataHelper.clearDB();
+    }
+
+    @Test
     void shouldTransfer() {
         var amount = "100";
         var amountForAssert = Integer.parseInt(amount);
@@ -24,7 +31,7 @@ class Test {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void doNotShouldTransferNegativeSum() {
         var amount = "-800000";
         APIHelper.login(DataHelper.getAuthInfoFirstUser());
